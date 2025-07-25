@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_sanatorium_root" name="Санаторий `Здоровье`"  sequence="10" web_icon="sanatorium_profilactorium,static/images/icons/favicon_zdirovie.png"/>
+    </data>
+</odoo>
+    

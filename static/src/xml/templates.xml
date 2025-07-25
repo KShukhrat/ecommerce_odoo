@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sanatorium_profilactorium.PhoneField" owl="1">
+        <div class="o_field_widget">
+            <input
+                    t-ref="input"
+                    type="tel"
+                    class="o_input"
+                    t-att-placeholder="props.placeholder || '+7 (XXX) XXX-XX-XX'"
+                    t-att-readonly="props.readonly"
+                    t-att-disabled="props.readonly"
+            />
+        </div>
+    </t>
+</templates>

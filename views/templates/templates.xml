@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    <template id="layout_favicon" inherit_id="website.option_header_brand_logo">-->
+    <!--        <xpath expr="//link[@rel='icon']" position="replace">-->
+    <!--            <link rel="icon" type="image/png" href="/sanatorium_profilactorium/static/images/icons/favicon_zdirovie.png"/>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
+
+    <!--    <template id="footer_custom" inherit_id="website.footer_custom">-->
+    <!--        <xpath expr="//div[hasclass('o_footer_copyright')]//img" position="replace">-->
+    <!--            <img src="/sanatorium_profilactorium/static/images/icons/logo_zdirovie.png" alt="Санаторий 'Здоровье'" class="img img-fluid" style="max-height: 36px;"/>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
+</odoo>

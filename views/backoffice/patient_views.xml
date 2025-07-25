@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Древовидное представление пациентов -->
+    <record id="view_patient_tree" model="ir.ui.view">
+        <field name="name">patient.tree</field>
+        <field name="model">z.patient</field>
+        <field name="arch" type="xml">
+            <tree string="Пациенты">
+                <field name="image" widget="image" class="oe_avatar" string="Фото" height="60" width="60"/>
+                <field name="name" string="ФИО"/>
+                <field name="student_id" string="Студент"/>
+                <field name="age" string="Возраст"/>
+                <field name="gender" string="Пол"/>
+                <field name="doctor_id" widget="many2one_avatar" string="Лечащий врач"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Форма пациента -->
+    <record id="view_patient_form" model="ir.ui.view">
+        <field name="name">patient.form</field>
+        <field name="model">z.patient</field>
+        <field name="arch" type="xml">
+            <form string="Пациент">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="image" widget="image" class="oe_avatar" string="Фото"/>
+                            <field name="student_id" string="Студент"/>
+                            <field name="birth_date" string="Дата рождения"/>
+                            <field name="age" string="Возраст"/>
+                            <field name="gender" string="Пол"/>
+                            <field name="doctor_id" string="Лечащий врач"/>
+                        </group>
+                        <group>
+                            <field name="phone" string="Телефон"/>
+                            <field name="email" string="Эл. почта"/>
+                            <field name="address" string="Адрес" widget="textarea"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Действие для работы с пациентами -->
+    <record id="action_patient" model="ir.actions.act_window">
+        <field name="name">Пациенты</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">z.patient</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Нажмите "Создать" для добавления нового пациента
+            </p>
+        </field>
+    </record>
+
+    <!-- Пункт меню -->
+    <menuitem action="action_patient" id="menu_patient" parent="menu_sanatorium_root" sequence="10"/>
+</odoo>

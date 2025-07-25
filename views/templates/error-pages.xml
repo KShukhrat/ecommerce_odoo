@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="not_found_page" name="Not Found Page">
+            <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-h-[55vh] tw-relative">
+<!--                <div class=" tw-text-[#66686c] tw-text-[42.55px] tw-font-bold tw-font-['Inter'] tw-leading-[53.18px] tw-text-center">-->
+<!--                    <img  src="/template_medion/static/imgs/404.svg" alt="404 page"/>-->
+<!--                </div>-->
+                <div class="tw-text-[#66686c] tw-mt-5 tw-mb-10 tw-text-xl tw-font-medium tw-font-['Inter'] tw-leading-normal">
+                    Страница не найдена
+                </div>
+
+                <div class="tw-h-12 tw-px-4 tw-py-2 tw-bg-[#212529] tw-rounded-lg tw-justify-start tw-items-center tw-gap-2 tw-inline-flex">
+                    <div class="tw-text-white tw-text-base tw-font-medium tw-font-['Inter'] tw-leading-[18px]">
+                        <a href="/" class="hover:tw-text-white">Вернуться на главную страницу</a>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="custom_404_page" inherit_id="http_routing.404">
+            <xpath expr="//div[@class='container']" position="replace">
+                <t t-call="sanatorium_profilactorium.not_found_page"></t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

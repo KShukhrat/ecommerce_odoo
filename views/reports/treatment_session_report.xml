@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="treatment_session_report">
+        <t t-call="web.html_container">
+            <h1>Отчет по сеансам лечения</h1>
+            <p>Количество врачей: <t t-esc="doctor_count"/></p>
+            <p>Количество процедур: <t t-esc="treatment_count"/></p>
+            <table>
+                <tr><th>Пациент</th><th>Врач</th><th>Процедура</th><th>Статус</th></tr>
+                <t t-foreach="docs" t-as="doc">
+                    <tr>
+                        <td><t t-esc="doc.patient_id.name"/></td>
+                        <td><t t-esc="doc.doctor_id.name"/></td>
+                        <td><t t-esc="doc.treatment_id.name"/></td>
+                        <td><t t-esc="doc.status"/></td>
+                    </tr>
+                </t>
+            </table>
+        </t>
+    </template>
+</odoo>

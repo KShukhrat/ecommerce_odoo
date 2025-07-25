@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Древовидное представление студентов -->
+    <record id="view_student_tree" model="ir.ui.view">
+        <field name="name">student.tree</field>
+        <field name="model">z.student</field>
+        <field name="arch" type="xml">
+            <tree string="Студенты">
+                <field name="image" widget="image" class="oe_avatar" width="60" height="60"/>
+                <field name="name" string="ФИО"/>
+                <field name="student_id" string="Студенческий билет"/>
+                <field name="birth_date" string="Дата рождения"/>
+                <field name="age" string="Возраст"/>
+                <field name="gender" string="Пол"/>
+                <field name="nationality_id" widget="many2one_avatar" string="Гражданство"/>
+                <field name="phone" string="Телефон"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Форма студента -->
+    <record id="view_student_form" model="ir.ui.view">
+        <field name="name">student.form</field>
+        <field name="model">z.student</field>
+        <field name="arch" type="xml">
+            <form string="Студент">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <!-- Первая вкладка - Личная информация -->
+                        <page string="Личные данные">
+                            <group>
+                                <group>
+                                    <field name="image" widget="image" class="oe_avatar" string="Фото"/>
+                                    <field name="student_id" string="Студенческий билет"/>
+                                    <field name="birth_date" string="Дата рождения"/>
+                                    <field name="age" string="Возраст"/>
+                                    <field name="gender" string="Пол"/>
+                                    <field name="nationality_id" string="Гражданство"/>
+                                </group>
+                                <group>
+                                    <field name="email" string="Электронная почта" widget="email"/>
+                                    <field name="phone" widget="phone_mask"/>
+                                    <field name="passport_number" string="Паспортные данные" title="Паспорт (серия и номер)"/>
+                                    <field name="oms_policy" string="Полис ОМС" title="Полис ОМС (№)"/>
+                                    <field name="dms_policy" string="Полис ДМС" title="Полис ДМС (для иностранных студентов, если есть)"/>
+                                    <field name="snils" string="СНИЛС" title="СНИЛС (если есть)"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="registration_address" widget="textarea" string="Адрес регистрации"/>
+                                <field name="residence_address" widget="textarea" string="Фактический адрес"/>
+                            </group>
+                        </page>
+
+                        <!-- Вторая вкладка - Медицинская информация -->
+                        <page string="Медицинские данные">
+                            <group>
+                                <group>
+                                    <field name="chronic_diseases" string="Хронические заболевания"/>
+                                    <field name="chronic_diseases_details" string="Подробности" invisible="not chronic_diseases"/>
+                                    <field name="allergies" string="Аллергии"/>
+                                    <field name="allergies_details" string="Подробности" invisible="not allergies"/>
+                                    <field name="medical_book" string="Медкнижка"/>
+                                    <field name="blood_type" widget="selection" default=""/>
+                                </group>
+                                <group>
+                                    <field name="first_time_registration" string="Первичное прикрепление?"/>
+                                    <field name="previous_clinic" string="Предыдущая поликлиника" invisible="first_time_registration"/>
+                                    <field name="consent_personal_data" string="Согласие на обработку данных"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- Третья вкладка - Пациент (отображается только если есть запись) -->
+                        <page string="Карта пациента" invisible="not patient_id">
+                            <field name="patient_id">
+                                <tree>
+                                    <field name="doctor_id" string="Лечащий врач"/>
+                                    <field name="name" string="ФИО"/>
+                                    <field name="age" string="Возраст"/>
+                                    <field name="gender" string="Пол"/>
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="name" string="ФИО"/>
+                                                <field name="birth_date" string="Дата рождения"/>
+                                                <field name="age" string="Возраст"/>
+                                                <field name="gender" string="Пол"/>
+                                            </group>
+                                            <group>
+                                                <field name="doctor_id" string="Лечащий врач"/>
+                                                <field name="phone" string="Телефон" class="phone_student"/>
+                                                <field name="email" string="Электронная почта"/>
+                                                <field name="address" string="Адрес"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Действие для отображения студентов -->
+    <record id="action_student" model="ir.actions.act_window">
+        <field name="name">Студенты</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">z.student</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Нажмите "Создать" чтобы добавить нового студента
+            </p>
+        </field>
+    </record>
+
+    <!-- Пункт меню -->
+    <menuitem action="action_student" id="menu_student" parent="menu_sanatorium_root" sequence="40"/>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_treatment_form" model="ir.ui.view">
+        <field name="name">treatment.form</field>
+        <field name="model">z.treatment</field>
+        <field name="arch" type="xml">
+            <form string="Процедура">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="duration"/>
+                        <field name="price"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_treatment_tree" model="ir.ui.view">
+        <field name="name">treatment.tree</field>
+        <field name="model">z.treatment</field>
+        <field name="arch" type="xml">
+            <tree string="Процедуры">
+                <field name="name"/>
+                <field name="duration"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_treatment" model="ir.actions.act_window">
+        <field name="name">Процедуры</field>
+        <field name="res_model">z.treatment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="action_treatment" id="menu_treatment" parent="menu_sanatorium_root" sequence="20"/>
+</odoo>

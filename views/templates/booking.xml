@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="booking_form" name="Online Booking Form">
+        <t t-call="website.layout">
+            <div class="container mt-4 mb-5">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h1 class="text-center mb-4">Онлайн-запись на процедуры</h1>
+
+                        <div t-if="error_message" class="alert alert-danger" role="alert">
+                            <t t-esc="error_message"/>
+                        </div>
+
+                        <form method="post" action="/booking/submit" class="o_website_form">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Персональные данные</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-3" for="name">ФИО *</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="name" id="name" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-3" for="phone">Телефон *</label>
+                                        <div class="col-sm-9">
+                                            <input type="tel" class="form-control" name="phone" id="phone" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-3" for="email">Email *</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" name="email" id="email" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-3" for="age">Возраст</label>
+                                        <div class="col-sm-9">
+                                            <input type="number" class="form-control" name="age" id="age"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-3" for="gender">Пол</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="gender" id="gender">
+                                                <option value="male">Мужской</option>
+                                                <option value="female">Женский</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mt-4">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Запись на процедуру</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-3" for="treatment_id">Процедура *</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="treatment_id" id="treatment_id" required="required">
+                                                <option value="">-- Выберите процедуру --</option>
+                                                <t t-foreach="treatments" t-as="treatment">
+                                                    <option t-att-value="treatment.id">
+                                                        <t t-esc="treatment.name"/>
+                                                        (<t t-esc="treatment.duration"/> ч., <t t-esc="treatment.price"/> руб.)
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-3" for="doctor_id">Врач *</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="doctor_id" id="doctor_id" required="required">
+                                                <option value="">-- Выберите врача --</option>
+                                                <t t-foreach="doctors" t-as="doctor">
+                                                    <option t-att-value="doctor.id">
+                                                        <t t-esc="doctor.name"/> (<t t-esc="doctor.specialty"/>)
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-3" for="date">Дата *</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" class="form-control" name="date" id="date"
+                                                   t-att-min="datetime.date.today().isoformat()" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-sm-3" for="time_start">Время *</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="time_start" id="time_start" required="required" disabled="1">
+                                                <option value="">-- Сначала выберите врача и дату --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg float-right">
+                                    Записаться на процедуру
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript" src="/sanatorium_profilactorium/static/js/booking.js"></script>
+        </t>
+    </template>
+
+    <template id="booking_confirmation" name="Booking Confirmation">
+        <t t-call="website.layout">
+            <div class="container mt-4 mb-5">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h2 class="mb-0">Запись подтверждена!</h2>
+                            </div>
+                            <div class="card-body">
+                                <div t-if="success">
+                                    <h4>Детали вашей записи:</h4>
+                                    <table class="table table-bordered mt-3">
+                                        <tr>
+                                            <th style="width: 30%;">Процедура:</th>
+                                            <td><t t-esc="session.treatment_id.name"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Врач:</th>
+                                            <td><t t-esc="session.doctor_id.name"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Дата и время:</th>
+                                            <td>
+                                                <t t-esc="session.date.strftime('%d.%m.%Y')"/>,
+                                                <t t-esc="int(session.time_start)"/>:<t t-esc="int((session.time_start % 1) * 60)"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <p class="mt-4">
+                                        Информация о вашей записи была отправлена на указанный email.
+                                    </p>
+
+                                    <div class="text-center mt-4">
+                                        <a href="/" class="btn btn-primary mr-2">На главную</a>
+                                        <a href="/booking" class="btn btn-outline-primary">Новая запись</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <record id="menu_booking" model="website.menu">
+        <field name="name">Онлайн-запись</field>
+        <field name="url">/booking</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">50</field>
+    </record>
+
+
+</odoo>
